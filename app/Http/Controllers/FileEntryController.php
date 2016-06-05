@@ -39,8 +39,17 @@ class FileEntryController extends Controller
       $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
       $file = Storage::disk('local')->get($entry->filename);
 
-      return response($file, 200)->header('Content-Type', $entry->mime);
-      //return (new Response($file, 200))->header('Content-Type', $entry->mime);
+      $headers = array(
+              'Content-Type' => $entry->mime,
+            );
+
+//$response = \Response::make($file, 200);
+//$response->header('Content-Type', $entry->mime);
+//return $response;
+
+      //return response($file, 200)->header('Content-Type', $entry->mime);
+
+      return \Response($file, 200)->header('Content-Type', $entry->mime);
     }
 
 }
